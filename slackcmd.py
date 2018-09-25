@@ -45,7 +45,7 @@ def parse_args():
     parser.add_argument('-u','--url', 
         help='Slack Incoming Webhooks integration webhook URL.  If the environment variable %s is set, will read this value from there' % WEBHOOK_ENV_VAR_NAME, required=webhook_url is None, 
         default=webhook_url) 
-    parser.add_argument('-c','--channel', help='Channel to post to', required=True)
+    parser.add_argument('-c','--channel', help='Channel to post to', required=False)
     parser.add_argument('-n','--user', help='Name of the user to post as, defaults to "%s"' % DEFAULT_USER_NAME, 
         required=False, default=DEFAULT_USER_NAME)
     parser.add_argument('-e','--emoji', help='Emoji to use for the message', 
@@ -62,7 +62,7 @@ def parse_args():
         args['emoji'] = args['emoji'] + ":" 
 
     # ensure channel has pound sign
-    if args['channel'][0] not in ['#', '@']:
+    if args['channel'] and args['channel'][0] not in ['#', '@']:
         args['channel'] = '#' + args['channel']
 
     return args
